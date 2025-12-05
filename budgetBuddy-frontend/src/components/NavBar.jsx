@@ -12,7 +12,7 @@ function NavBar() {
 
     // Get the locatoin the user is at for redirect after login.
     const from = location.state?.from?.pathname || '/';
-    const BACKEND_URL = import.meta.env.VITE_BACKEND_API_BASE_URL || 'http://localhost:3000';
+    const BACKEND_URL = import.meta.env.VITE_BACKEND_API_BASE_URL || '/api';
 
     // Backend URL from is used to redirect back after login.
     const googleLoginUrl = BACKEND_URL + '/auth/google?returnTo=' + from;
