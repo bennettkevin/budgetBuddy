@@ -24,6 +24,41 @@ async function fetchUserBudget(req, res) {
     }
 }
 
+async function fetchBudgetItemById(req, res) {
+    const itemId = req.params.itemId;
+    if(itemId) {
+        try {
+            const budgetItem = await model.getBudgetItemById(itemId);
+            res.json(budgetItem);
+        }
+        catch (error) {
+            console.error(error);
+            res.status(500).send("Server error");
+        }
+    }
+    else {
+        res.status(400).send("Missing required itemId param.");
+    }
+}
+
+async function putBudgetItem(req, res) {
+    const itemId = req.params.itemId;
+    const { type, name, cost, description } = req.body;
+    if(itemId && type && name && cost) {
+        try {
+            const updatedItem = await model.updateBudgetItem(itemId, type, name, cost, description);
+            res.status(200).json(updatedItem);
+        }
+        catch (error) {
+            console.error(error);
+            res.status(500).send("Server error");
+        }
+    }
+    else {
+        res.status(400).send("Missing required fields");
+    }
+}
+
 /**
  * This function adds a new budget item.
  * @param {Object} req The request object.
@@ -46,7 +81,26 @@ async function postBudgetItem(req, res) {
     }
 }
 
+async function deleteBudgetItem(req, res) {
+    const itemId = req.params.id;
+    if(itemId) {
+        try {
+            const itemDeleted = await model.deleteBudgetItem(itemId);
+            res.status(200).json(itemDeleted);
+        }
+        catch (error) {
+            console.error(error);
+            res.status(500).send("Server error");
+        }
+    }
+    else {
+        res.status(400).send("Missing required itemId param");
+    }
+}
 module.exports = {
     fetchUserBudget,
-    postBudgetItem
+    postBudgetItem,
+    deleteBudgetItem,
+    fetchBudgetItemById,
+    putBudgetItem
 };

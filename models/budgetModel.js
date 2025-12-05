@@ -14,6 +14,13 @@ async function getUserBudget(id) {
     return result.rows;
 }
 
+async function getBudgetItemById(itemId) {
+    let queryText = "SELECT * FROM budgetitems WHERE id = $1;";
+    const values = [itemId];
+    const result = await pool.query(queryText, values);
+    return result.rows[0];
+}
+
 /**
  * This function adds a budget item to the database.
  * @param {string} id The goodlId of the user who owns this item.
@@ -31,7 +38,26 @@ async function addBudgetItem (id, type, name, cost, description) {
     return result.rows[0];
 }
 
+async function updateBudgetItem (itemId, type, name, cost, description) {
+    let queryText = "UPDATE budgetitems SET type = $1, name = $2, cost = $3, description = $4 WHERE id = $5 RETURNING *;";
+    let values = [type, name, cost, description, itemId];
+
+    const result = await pool.query(queryText, values);
+    return result.rows[0];
+}
+
+async function deleteBudgetItem(itemId) {
+    let queryText = "DELETE FROM budgetitems WHERE id = $1;";
+    let values = [itemId];
+
+    const result = await pool.query(queryText, values);
+    return result.rows[0];
+}
+
 module.exports = {
     getUserBudget,
-    addBudgetItem
+    addBudgetItem,
+    deleteBudgetItem,
+    getBudgetItemById,
+    updateBudgetItem
 };

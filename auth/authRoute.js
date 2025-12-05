@@ -3,7 +3,7 @@ const passport = require("passport");
 const router = express.Router();
 const userModel = require("../models/userModel");
 
-const CLIENT_BASE_URL = process.env.CLIENT_BASE_URL || 'http://localhost:5173';
+const CLIENT_BASE_URL = process.env.CLIENT_BASE_URL || '/';
 
 /**
  * Save the returnTo path in session before authentication
@@ -37,7 +37,7 @@ router.get(
     failureRedirect: `${CLIENT_BASE_URL}/login?error=true`, 
   }),
   (req, res) => {
-    const returnTo = req.session.returnTo || '/profile';
+    const returnTo = req.session.returnTo || '/';
     delete req.session.returnTo; 
 
     // Redirect back to the frontend

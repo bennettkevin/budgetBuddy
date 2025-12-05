@@ -6,7 +6,7 @@ import axios from 'axios';
 function HomePage() {
     const [quote, setQuote] = useState("");
     const [quoteAuthor, setAuthor] = useState("");
-    const BACKEND_URL = "http://localhost:3000";
+    const BACKEND_URL = "http://localhost:3000/api";
     
     useEffect(() => {
         const getQuote = async () => {

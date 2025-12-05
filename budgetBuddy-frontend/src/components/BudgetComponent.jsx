@@ -2,6 +2,7 @@ import React from 'react';
 import { useAuth } from './auth/AuthContext';
 import BudgetService from '../BudgetService';
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 function BudgetComponent() {
     const [ budgetItems, setBudgetItems ] = useState([]);
@@ -105,6 +106,14 @@ function BudgetComponent() {
                             <td>{item.name}</td>
                             <td>{item.cost}</td>
                             <td>{item.description}</td>
+                            <td><Link to={`/budget/item/${item.id}`}>Edit</Link></td>
+                            <td><button onClick={() => BudgetService.deleteBudgetItem(item.id) 
+                            .then(() => {
+                                BudgetService.getUserBudget(user.googleid).then((res) => {
+                                    setBudgetItems(res.data);
+                                    setTotalBudget(calculateTotalBudget(res.data));
+                                });
+                            })}>Remove</button></td>
                         </tr>
                     ))}
                     <tr key="total-budget">
