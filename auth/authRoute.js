@@ -3,7 +3,7 @@ const passport = require("passport");
 const router = express.Router();
 const userModel = require("../models/userModel");
 
-const CLIENT_BASE_URL = process.env.CLIENT_BASE_URL || '/';
+const CLIENT_BASE_URL = process.env.CLIENT_BASE_URL || '';
 
 /**
  * Save the returnTo path in session before authentication
