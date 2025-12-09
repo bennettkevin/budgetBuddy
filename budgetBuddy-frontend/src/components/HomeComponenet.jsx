@@ -18,7 +18,7 @@ function HomePage() {
                 const result = await response.json();
                 setQuote(result.quoteText);
                 if(result.quoteAuthor === "" || result.quoteAuthor === null){
-                    setAuthor("");
+                    setAuthor("Unknown");
                 }
                 else {
                 setAuthor(result.quoteAuthor);
@@ -26,6 +26,8 @@ function HomePage() {
             }
             catch (error) {
                 console.error("Error while getting quote: ", error);
+                setQuote("A goal is a dream with a deadline.");
+                setAuthor("Napoleon Hill");
             }
         }
 

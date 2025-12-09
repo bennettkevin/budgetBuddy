@@ -14,6 +14,7 @@ async function getRandomQuote () {
         }
         catch (error) {
             console.error("Error while getting quote: ", error);
+            response.status(500);
         }
     
 }
